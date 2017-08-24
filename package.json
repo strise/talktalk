@@ -1,0 +1,45 @@
+{
+  "name": "talktalk",
+  "version": "0.0.1",
+  "description": "A framework for bots",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "npm run test:lint && npm run test:flow",
+    "build": "babel src -d lib --copy-files && flow-copy-source src lib",
+    "test:lint": "eslint .",
+    "test:flow": "flow ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitoai/talktalk.git"
+  },
+  "keywords": [
+    "bot",
+    "talk",
+    "chat"
+  ],
+  "author": "Christian Budde Christensen <christian@mito.ai>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mitoai/talktalk/issues"
+  },
+  "homepage": "https://github.com/mitoai/talktalk#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.5.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^3.1.9",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-config-standard-flow": "^1.0.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "flow-bin": "^0.53.1",
+    "flow-copy-source": "^1.2.1"
+  },
+  "dependencies": {
+    "debug": "^3.0.0"
+  }
+}
