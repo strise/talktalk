@@ -28,3 +28,8 @@ export function startCliBot(dispatcher: Dispatcher<CliMessage, *, CliReply>) {
   })
   prompt(dispatcher, rl)
 }
+
+
+export async function cliReplier (reply: CliReply) {
+  console.log('Bot > ' + reply.message)
+}

@@ -2,7 +2,7 @@
 
 import Dispatcher from '../../src/dispatcher'
 import Handler from '../../src/handler'
-import { startCliBot } from '../utils'
+import { cliReplier, startCliBot } from '../utils'
 import type { CliMessage, CliReply } from '../utils'
 
 class EchoHandler extends Handler {
@@ -11,7 +11,7 @@ class EchoHandler extends Handler {
   }
 }
 
-const dispatcher: Dispatcher<CliMessage, *, CliReply> = new Dispatcher(async (reply: CliReply) => console.log('Bot > ' + reply.message))
+const dispatcher: Dispatcher<CliMessage, *, CliReply> = new Dispatcher(cliReplier)
 
 dispatcher.registerHandler(EchoHandler)
 
