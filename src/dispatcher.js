@@ -42,7 +42,7 @@ export default class Dispatcher<Message: BaseMessage, Postback: BasePostback<*>,
 
   _saveOrClearSession (userId: string, session: Session): Promise<*> {
     if (!session.context) {
-      debug('No context. Clearing session')
+      debug('No context. Clearing session', session)
       return this.store.clearEntry(userId)
     }
     debug('Saving session')

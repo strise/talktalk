@@ -54,7 +54,7 @@ export default class Handler<Context: {}, RedirectContext: {}, PostbackContext: 
     this.redirector = async () => {
       const handler = new _Handler(this.sender)
       const newContext: ?C = await handler.handleRedirect(context)
-      return {handler, context: {}}
+      return {handler, context: newContext}
     }
   }
 }
