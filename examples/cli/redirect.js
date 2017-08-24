@@ -6,8 +6,9 @@ import { cliReplier, startCliBot } from '../utils'
 import type { CliMessage, CliReply } from '../utils'
 
 class QualityJudgeHandler extends Handler {
-  async handleRedirect (context: {number: number}) {
+  async handleRedirect (context: { number: number }) {
     await this.sendMessage({message: `${context.number}... That's not very original`})
+    this.redirectTo(IntroHandler, {})
   }
 }
 
@@ -18,7 +19,7 @@ class IntroHandler extends Handler {
     return {}
   }
 
-  async handleSessionMessage(message: CliMessage): Promise<*> {
+  async handleSessionMessage (message: CliMessage): Promise<*> {
     const number = parseInt(message.message)
     if (isNaN(number) || number < 0 || number > 100) {
       await this.sendMessage({message: 'That is not a valid number...'})
@@ -26,6 +27,11 @@ class IntroHandler extends Handler {
       return {}
     }
     this.redirectTo(QualityJudgeHandler, {number})
+  }
+
+  async handleRedirect (): Promise<*> {
+    this.sendMessage({message: 'Try again!'})
+    return {}
   }
 }
 
