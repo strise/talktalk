@@ -13,7 +13,7 @@ class QualityJudgeHandler extends Handler {
 }
 
 class IntroHandler extends Handler {
-  async handleFirstMessage (message: CliMessage): Promise<*> {
+  async handleFirstMessage (): Promise<*> {
     await this.sendMessage({message: 'Hi'})
     await this.sendMessage({message: 'Please give me a number between 0 and 100!'})
     return {}
@@ -35,7 +35,7 @@ class IntroHandler extends Handler {
   }
 }
 
-const dispatcher: Dispatcher<CliMessage, *, CliReply> = new Dispatcher(cliReplier)
+const dispatcher: Dispatcher<CliMessage, CliReply> = new Dispatcher(cliReplier)
 
 dispatcher.registerHandler(IntroHandler)
 

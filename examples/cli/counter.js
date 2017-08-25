@@ -17,7 +17,7 @@ class CounterHandler extends Handler {
   }
 }
 
-const dispatcher: Dispatcher<CliMessage, *, CliReply> = new Dispatcher(cliReplier)
+const dispatcher: Dispatcher<CliMessage, CliReply> = new Dispatcher(cliReplier)
 
 dispatcher.registerHandler(CounterHandler)
 

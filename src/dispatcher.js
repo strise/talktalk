@@ -11,11 +11,11 @@ type Session = {|
 |}
 
 export type BaseMessage = {type: 'message', intent?: string, sender: string}
-export type BasePostback<C: {}> = {type: 'postback', context: C, target: string, sender: string}
+export type Postback<C: {}> = {type: 'postback', context: C, target: string, sender: string}
 
-export default class Dispatcher<Message: BaseMessage, Postback: BasePostback<*>, Reply: {}> {
-  handlers: Array<Class<Handler<*, *, Postback, Message, Reply>>> = []
-  handlersMap: { [string]: Class<Handler<*, *, Postback, Message, Reply>> } = {}
+export default class Dispatcher<Message: BaseMessage, Reply: {}> {
+  handlers: Array<Class<Handler<*, *, *, Message, Reply>>> = []
+  handlersMap: { [string]: Class<Handler<*, *, *, Message, Reply>> } = {}
   store: Storage<Session>
   sender: (r: Reply) => Promise<*>
 
@@ -24,12 +24,16 @@ export default class Dispatcher<Message: BaseMessage, Postback: BasePostback<*>,
     this.sender = sender
   }
 
-  handleMessages (messages: Array<Message | Postback>): Promise<*> {
+  buildPostback<PC: {}> (_Handler: Class<Handler<*, *, PC, *, *>>, context: PC, sender: string): Postback<PC> {
+    return {type: 'postback', context, target: _Handler.name, sender}
+  }
+
+  handleMessages (messages: Array<Message | Postback<*>>): Promise<*> {
     debug('Handling messages', messages)
     return Promise.all(messages.map(message => this.handleMessage(message)))
   }
 
-  async handleMessage (message: Message | Postback): Promise<*> {
+  async handleMessage (message: Message | Postback<*>): Promise<*> {
     switch (message.type) {
       case 'postback':
         return this._handlePostback(message)
@@ -65,7 +69,7 @@ export default class Dispatcher<Message: BaseMessage, Postback: BasePostback<*>,
     return this._handleSessionMessage(message, session)
   }
 
-  async _handlePostback (postback: Postback): Promise<*> {
+  async _handlePostback (postback: Postback<*>): Promise<*> {
     const _Handler = this.handlersMap[postback.target]
     if (!_Handler) {
       return
@@ -76,7 +80,7 @@ export default class Dispatcher<Message: BaseMessage, Postback: BasePostback<*>,
     return this._messagePostProcess(handler, context, postback)
   }
 
-  async _handleFirstMessage (message: Message, handlers: Class<Handler<*, *, Postback, Message, Reply>>[]) {
+  async _handleFirstMessage (message: Message, handlers: Class<Handler<*, *, *, Message, Reply>>[]) {
     if (!handlers.length) {
       debug('Found no handler...')
       throw new Error('No handler found')
@@ -98,7 +102,7 @@ export default class Dispatcher<Message: BaseMessage, Postback: BasePostback<*>,
     return this._messagePostProcess(handler, newContext, message, this.handlers.slice(0))
   }
 
-  async _messagePostProcess<C: {}> (handler: Handler<C, *, Postback, Message, Reply>, context: ?C, message: Message | Postback, handlers?: Class<Handler<C, *, Postback, Message, Reply>>[] = []) {
+  async _messagePostProcess<C: {}> (handler: Handler<C, *, *, Message, Reply>, context: ?C, message: Message | Postback<*>, handlers?: Class<Handler<C, *, *, Message, Reply>>[] = []) {
     const redirector = handler.redirector
     if (redirector) {
       debug('Redirecting...')
@@ -117,7 +121,7 @@ export default class Dispatcher<Message: BaseMessage, Postback: BasePostback<*>,
     return this._handleFirstMessage(message, handlers)
   }
 
-  registerHandler (Handler: Class<Handler<*, *, Postback, Message, Reply>>): void {
+  registerHandler (Handler: Class<Handler<*, *, *, Message, Reply>>): void {
     this.handlers.push(Handler)
     this.handlersMap[Handler.name] = Handler
   }

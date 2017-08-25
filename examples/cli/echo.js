@@ -11,7 +11,7 @@ class EchoHandler extends Handler {
   }
 }
 
-const dispatcher: Dispatcher<CliMessage, *, CliReply> = new Dispatcher(cliReplier)
+const dispatcher: Dispatcher<CliMessage, CliReply> = new Dispatcher(cliReplier)
 
 dispatcher.registerHandler(EchoHandler)
 
