@@ -6,9 +6,9 @@ export default class Handler<Context: {}, RedirectContext: {}, PostbackContext: 
   redirector: ?(() => Promise<{ handler: Handler<*, *, *, Message, Reply>, context: * }>)
   intent: ?string
   _done: boolean = false
-  sender: (Reply) => Promise<*>
+  sender: (r: Reply) => Promise<*>
 
-  constructor (sender: (Reply) => Promise<*>) {
+  constructor (sender: (r: Reply) => Promise<*>) {
     this.sender = sender
   }
 

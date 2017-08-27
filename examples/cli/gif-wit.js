@@ -7,6 +7,7 @@ import type { CliReply, WitMessage } from '../utils'
 
 class GreetingHandler extends Handler {
   intent = 'greeting'
+
   async handleFirstMessage (msg): Promise<*> {
     this.sendMessage({message: 'Hello there!'})
     return {}
@@ -16,12 +17,13 @@ class GreetingHandler extends Handler {
 
 class GifHandler extends Handler {
   intent = 'gif'
-  async handleFirstMessage(msg): Promise<*> {
+
+  async handleFirstMessage (msg): Promise<*> {
     await this.sendMessage({message: 'Sure! What would you like your gif to be about?'})
     return {}
   }
 
-  async handleSessionMessage(msg): Promise<*> {
+  async handleSessionMessage (msg): Promise<*> {
     const candidate = msg.entities.subject && findBestCandidate(msg.entities.subject)
     if (!candidate || candidate.confidence < 0.5) {
       await this.sendMessage({message: 'Sorry, I did not understand that. Please try again.'})

@@ -10,10 +10,11 @@ class CounterHandler extends Handler {
     await this.sendMessage({message: 'You have sent 1 message'})
     return {count: 1}
   }
-  async handleSessionMessage (message: CliMessage, context: {count: number}): Promise<*> {
+
+  async handleSessionMessage (message: CliMessage, context: { count: number }): Promise<*> {
     const newCount = context.count + 1
     await this.sendMessage({message: `You have sent ${newCount} messages`})
-    return {count: newCount }
+    return {count: newCount}
   }
 }
 

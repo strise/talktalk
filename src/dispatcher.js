@@ -3,6 +3,7 @@ import Debug from 'debug'
 import type Handler from './handler'
 import type Storage from './storage/storage'
 import MemoryStorage from './storage/memory'
+
 const debug = Debug('talktalk:dispather')
 
 type Session = {|
@@ -10,8 +11,8 @@ type Session = {|
   context: ?{}
 |}
 
-export type BaseMessage = {type: 'message', intent?: string, sender: string}
-export type Postback<C: {}> = {type: 'postback', context: C, target: string, sender: string}
+export type BaseMessage = { type: 'message', intent?: string, sender: string }
+export type Postback<C: {}> = { type: 'postback', context: C, target: string, sender: string }
 
 export default class Dispatcher<Message: BaseMessage, Reply: {}> {
   handlers: Array<Class<Handler<*, *, *, Message, Reply>>> = []
@@ -53,7 +54,7 @@ export default class Dispatcher<Message: BaseMessage, Reply: {}> {
     return this.store.setEntry(userId, session)
   }
 
-  _fetchSession(userId: string) {
+  _fetchSession (userId: string) {
     return this.store.getEntry(userId)
   }
 

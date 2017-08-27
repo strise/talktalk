@@ -32,7 +32,7 @@ export type CliReply = {
   message: string
 }
 
-function prompt<X: BaseMessage> (dispatcher: Dispatcher<X, CliReply>, rl, enricher: (CliMessage) => Promise<X>) {
+function prompt<X: BaseMessage> (dispatcher: Dispatcher<X, CliReply>, rl, enricher: (m: CliMessage) => Promise<X>) {
   rl.question('You > ', (answer) => {
     const msg: CliMessage = {type: 'message', sender: 'cli', message: answer}
     enricher(msg)
