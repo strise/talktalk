@@ -1,14 +1,14 @@
 // @flow
 
-import Dispatcher from '../../src/dispatcher'
-import Handler from '../../src/handler'
-import { cliReplier, startCliBot } from '../utils'
-import type { CliMessage, CliReply } from '../utils'
+import Dispatcher from '../../../src/dispatcher'
+import Handler from '../../../src/handler'
+import { cliReplier, startCliBot } from '../../utils'
+import type { CliMessage, CliReply } from '../../utils'
 
 class QualityJudgeHandler extends Handler {
-  async handleRedirect (context: { number: number }) {
+  async handleJump (context: { number: number }) {
     await this.sendMessage({message: `${context.number}... That's not very original`})
-    this.redirectTo(IntroHandler, {})
+    this.jumpTo(IntroHandler, {})
   }
 }
 
@@ -26,10 +26,10 @@ class IntroHandler extends Handler {
       await this.sendMessage({message: 'Try again!'})
       return {}
     }
-    this.redirectTo(QualityJudgeHandler, {number})
+    this.jumpTo(QualityJudgeHandler, {number})
   }
 
-  async handleRedirect (): Promise<*> {
+  async handleJump (): Promise<*> {
     this.sendMessage({message: 'Try again!'})
     return {}
   }

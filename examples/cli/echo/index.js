@@ -1,9 +1,9 @@
 // @flow
 
-import Dispatcher from '../../src/dispatcher'
-import Handler from '../../src/handler'
-import { cliReplier, startCliBot } from '../utils'
-import type { CliMessage, CliReply } from '../utils'
+import Dispatcher from '../../../src/dispatcher'
+import Handler from '../../../src/handler'
+import { cliReplier, startCliBot } from '../../utils'
+import type { CliMessage, CliReply } from '../../utils'
 
 class EchoHandler extends Handler {
   async handleFirstMessage (message: CliMessage): Promise<*> {

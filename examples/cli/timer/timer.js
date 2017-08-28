@@ -1,9 +1,9 @@
 // @flow
 
-import Dispatcher from '../../src/dispatcher'
-import Handler from '../../src/handler'
-import { cliReplier, findBestCandidate, startCliWitBot } from '../utils'
-import type { CliReply, WitMessage } from '../utils'
+import Dispatcher from '../../../src/dispatcher'
+import Handler from '../../../src/handler'
+import { cliReplier, findBestCandidate, startCliWitBot } from '../../utils'
+import type { CliReply, WitMessage } from '../../utils'
 
 class GreetingHandler extends Handler {
   intent = 'greeting'
@@ -31,7 +31,7 @@ class TimerHandler extends Handler {
   async handleFirstMessage (msg): Promise<*> {
     const duration = findDuration(msg)
     if (duration) {
-      this.redirectTo(SetTimerHandler, {duration})
+      this.jumpTo(SetTimerHandler, {duration})
       return
     }
     await this.sendMessage({message: 'When do you want your timer to start?'})
@@ -41,7 +41,7 @@ class TimerHandler extends Handler {
   async handleSessionMessage (msg): Promise<*> {
     const duration = findDuration(msg)
     if (duration) {
-      this.redirectTo(SetTimerHandler, {duration})
+      this.jumpTo(SetTimerHandler, {duration})
       return
     }
     await this.sendMessage({message: 'Sorry, I did not understand that. Please try again.'})
@@ -55,7 +55,7 @@ class SetTimerHandler extends Handler {
     dispatcher.handleMessage(dispatcher.buildPostback(SetTimerHandler, { id }, 'cli'))
   }
 
-  async handleRedirect (context: { duration: number }) {
+  async handleJump (context: { duration: number }) {
     const id = Math.floor(Math.random() * 100000000).toString()
     setTimeout(() => this._timer(id), context.duration * 1000)
     await this.sendMessage({message: `I've set a timer with id ${id}`})

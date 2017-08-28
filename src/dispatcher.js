@@ -104,10 +104,10 @@ export default class Dispatcher<Message: BaseMessage, Reply: {}> {
   }
 
   async _messagePostProcess<C: {}> (handler: Handler<C, *, *, Message, Reply>, context: ?C, message: Message | Postback<*>, handlers?: Class<Handler<C, *, *, Message, Reply>>[] = []) {
-    const redirector = handler.redirector
-    if (redirector) {
-      debug('Redirecting...')
-      const {handler: newHandler, context: newContext} = await redirector()
+    const jumber = handler.jumper
+    if (jumber) {
+      debug('Jumping...')
+      const {handler: newHandler, context: newContext} = await jumber()
       debug('... to ', newHandler.constructor.name, 'with context', newContext)
       return this._messagePostProcess(newHandler, newContext, message, this.handlers)
     }

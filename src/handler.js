@@ -1,9 +1,9 @@
 // @flow
 import type { BaseMessage } from './dispatcher'
 
-export default class Handler<Context: {}, RedirectContext: {}, PostbackContext: {}, Message: BaseMessage, Reply: {}> {
+export default class Handler<Context: {}, JumpContext: {}, PostbackContext: {}, Message: BaseMessage, Reply: {}> {
   hasSentMessage: boolean = false
-  redirector: ?(() => Promise<{ handler: Handler<*, *, *, Message, Reply>, context: * }>)
+  jumper: ?(() => Promise<{ handler: Handler<*, *, *, Message, Reply>, context: * }>)
   intent: ?string
   _done: boolean = false
   sender: (r: Reply) => Promise<*>
@@ -34,7 +34,7 @@ export default class Handler<Context: {}, RedirectContext: {}, PostbackContext: 
 
   }
 
-  async handleRedirect (context: RedirectContext): Promise<?Context> {
+  async handleJump (context: JumpContext): Promise<?Context> {
 
   }
 
@@ -50,10 +50,10 @@ export default class Handler<Context: {}, RedirectContext: {}, PostbackContext: 
     await this.sender(reply)
   }
 
-  redirectTo<C: {}, RC: {}> (_Handler: Class<Handler<C, RC, PostbackContext, Message, Reply>>, context: RC) {
-    this.redirector = async () => {
+  jumpTo<C: {}, RC: {}> (_Handler: Class<Handler<C, RC, PostbackContext, Message, Reply>>, context: RC) {
+    this.jumper = async () => {
       const handler = new _Handler(this.sender)
-      const newContext: ?C = await handler.handleRedirect(context)
+      const newContext: ?C = await handler.handleJump(context)
       return {handler, context: newContext}
     }
   }

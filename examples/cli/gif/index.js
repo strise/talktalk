@@ -1,9 +1,9 @@
 // @flow
 
-import Dispatcher from '../../src/dispatcher'
-import Handler from '../../src/handler'
-import { cliReplier, fetchGif, findBestCandidate, startCliWitBot } from '../utils'
-import type { CliReply, WitMessage } from '../utils'
+import Dispatcher from '../../../src/dispatcher'
+import Handler from '../../../src/handler'
+import { cliReplier, fetchGif, findBestCandidate, startCliWitBot } from '../../utils'
+import type { CliReply, WitMessage } from '../../utils'
 
 class GreetingHandler extends Handler {
   intent = 'greeting'
