@@ -12,7 +12,7 @@ const tester : Tester<Message, Reply> = new Tester()
 class HelloWorldHandler extends Handler {
 
   async handleFirstMessage () {
-    this.sendMessage({message: 'Hello world'})
+    this.sendReply({message: 'Hello world'})
   }
 }
 

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Remove unused logic
+* Rename methods
+
 ## [0.0.3]
 
 * Add tester to source

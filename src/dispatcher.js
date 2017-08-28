@@ -111,7 +111,7 @@ export default class Dispatcher<Message: BaseMessage, Reply: {}> {
       debug('... to ', newHandler.constructor.name, 'with context', newContext)
       return this._messagePostProcess(newHandler, newContext, message, this.handlers)
     }
-    if (handler.hasSentMessage) {
+    if (handler.hasSentReply) {
       await this._saveOrClearSession(message.sender, {handler: handler.constructor.name, context})
       return
     }

@@ -2,10 +2,9 @@
 import type { BaseMessage } from './dispatcher'
 
 export default class Handler<Context: {}, JumpContext: {}, PostbackContext: {}, Message: BaseMessage, Reply: {}> {
-  hasSentMessage: boolean = false
+  hasSentReply: boolean = false
   jumper: ?(() => Promise<{ handler: Handler<*, *, *, Message, Reply>, context: * }>)
   intent: ?string
-  _done: boolean = false
   sender: (r: Reply) => Promise<*>
 
   constructor (sender: (r: Reply) => Promise<*>) {
@@ -38,15 +37,8 @@ export default class Handler<Context: {}, JumpContext: {}, PostbackContext: {}, 
 
   }
 
-  _markMessageSent (): void {
-    if (this._done) {
-      throw new Error('Last message has already been sent.')
-    }
-    this.hasSentMessage = true
-  }
-
-  async sendMessage (reply: Reply): Promise<*> {
-    this._markMessageSent()
+  async sendReply (reply: Reply): Promise<*> {
+    this.hasSentReply = true
     await this.sender(reply)
   }
 
