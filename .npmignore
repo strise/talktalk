@@ -60,3 +60,6 @@ typings/
 .idea
 
 examples/config/local.yml
+test
+Jenkinsfile
+src

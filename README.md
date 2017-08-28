@@ -64,5 +64,5 @@ dispatcher.handleMessage({/* Message to handle */})
 
 
 
-Please see the [examples](/examples) folder examples.
+Please see the [github.com/mitoai/talktalk-examples](https://github.com/mitoai/talktalk-examples) repo for examples.
 
