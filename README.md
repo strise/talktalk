@@ -23,7 +23,7 @@ class  ExampleHandler extends Handler {
     // Handle the first message. Iff this handler should 
     // reply, send a reply using the function 
 
-    this.sendMessage( /* Your reply */ )
+    this.sendReply( /* Your reply */ )
 
     // If not, return undefined as soon as possible
     // then the next appropriate handler will be called.
