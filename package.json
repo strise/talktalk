@@ -4,10 +4,11 @@
   "description": "A framework for bots",
   "main": "lib/index.js",
   "scripts": {
-    "test": "npm run test:lint && npm run test:flow",
+    "test": "npm run test:lint && npm run test:flow && npm run test:unit",
     "build": "babel src -d lib --copy-files && flow-copy-source src lib",
     "test:lint": "eslint .",
-    "test:flow": "flow ."
+    "test:flow": "flow .",
+    "test:unit": "mocha -R spec --require babel-register \"test/**/*.test.js\""
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "babel-preset-env": "^1.5.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
     "config": "^1.26.2",
     "eslint": "^3.1.9",
     "eslint-config-standard": "^10.2.1",
@@ -39,6 +41,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "flow-bin": "^0.53.1",
     "flow-copy-source": "^1.2.1",
+    "mocha": "^3.5.0",
     "node-wit": "^4.3.0",
     "superagent": "^3.6.0"
   },

@@ -64,5 +64,5 @@ dispatcher.handleMessage({/* Message to handle */})
 
 
 
-Please see the [/examples](/examples) folder examples.
+Please see the [examples](/examples) folder examples.
 

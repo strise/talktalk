@@ -18,9 +18,9 @@ export default class Dispatcher<Message: BaseMessage, Reply: {}> {
   handlers: Array<Class<Handler<*, *, *, Message, Reply>>> = []
   handlersMap: { [string]: Class<Handler<*, *, *, Message, Reply>> } = {}
   store: Storage<Session>
-  sender: (r: Reply) => Promise<*>
+  sender: (r: Reply, m: Message | Postback<*>) => Promise<*>
 
-  constructor (sender: (r: Reply) => Promise<*>, store: Storage<Session> = new MemoryStorage()) {
+  constructor (sender: (r: Reply, m: Message | Postback<*>) => Promise<*>, store: Storage<Session> = new MemoryStorage()) {
     this.store = store
     this.sender = sender
   }
@@ -75,7 +75,7 @@ export default class Dispatcher<Message: BaseMessage, Reply: {}> {
     if (!_Handler) {
       return
     }
-    const handler = new _Handler(this.sender)
+    const handler = new _Handler((reply) => this.sender(reply, postback))
     debug('Handling postback with handler id', postback.target, 'and payload', postback.context)
     const context = await handler.handlePostback(postback.context)
     return this._messagePostProcess(handler, context, postback)
@@ -88,7 +88,7 @@ export default class Dispatcher<Message: BaseMessage, Reply: {}> {
     }
     const _Handler = handlers[0]
     debug('Trying', _Handler.name)
-    const handler = new _Handler(this.sender)
+    const handler = new _Handler((reply) => this.sender(reply, message))
     const context = await handler.handleMessage(message)
     debug('Finished message, got context', context)
     return this._messagePostProcess(handler, context, message, handlers.slice(1))
@@ -96,7 +96,7 @@ export default class Dispatcher<Message: BaseMessage, Reply: {}> {
 
   async _handleSessionMessage (message: Message, {handler: handlerId, context}: Session) {
     const _Handler = this.handlersMap[handlerId]
-    const handler = new _Handler(this.sender)
+    const handler = new _Handler((reply) => this.sender(reply, message))
     debug('Trying', handlerId)
     const newContext = await handler.handleMessage(message, context)
     debug('Finished handling message', newContext)
