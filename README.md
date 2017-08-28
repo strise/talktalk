@@ -1,5 +1,7 @@
 # TalkTalk
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mitoai/talktalk.svg?token=77baee5e5e9071c5ef5ff7d73561bd069a34d6364133d57969f75a5b6c844a8a&ts=1503922616970)](https://greenkeeper.io/)
+
 A small framework for building chatbots. Independent of chatbot platform or NLU service.
 
 ## Usage
