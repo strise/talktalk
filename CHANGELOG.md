@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.0.3]
+
 * Add tester to source
 
 ## [0.0.2]
