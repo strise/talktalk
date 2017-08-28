@@ -7,7 +7,7 @@ A small framework for building chatbots. Independent of chatbot platform or NLU 
 TalkTalk consists of dispatchers and handlers. The dispatcher keeps track of the conversation 
 defined by the handlers. Conversations follows the following pattern:
 
-```flow js
+```js
 import {Handler, Dispatcher} from 'talktalk'
 
 const dispatcher = new Dispatcher(/* Logic for handling replies */)
