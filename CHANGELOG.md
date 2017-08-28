@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Move examples to own repository
+* Remove `src`
 
 # [0.0.1]
 
