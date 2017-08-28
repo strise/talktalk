@@ -1,13 +1,13 @@
 // @flow
 
-import { TalkTalkTest } from './utils'
 import Handler from '../src/handler'
 import type { BaseMessage } from '../src/dispatcher'
 import assert from 'assert'
+import Tester from '../src/tester'
 
 type Message = BaseMessage & {message: string}
 type Reply = {message: string}
-const tester : TalkTalkTest<Message, Reply> = new TalkTalkTest()
+const tester : Tester<Message, Reply> = new Tester()
 
 class HelloWorldHandler extends Handler {
 

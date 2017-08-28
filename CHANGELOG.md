@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Add tester to source
+
 ## [0.0.2]
 
 * Move examples to own repository

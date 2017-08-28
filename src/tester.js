@@ -1,15 +1,15 @@
 // @flow
 
-import type { BaseMessage, Postback } from '../src/dispatcher'
-import Dispatcher from '../src/dispatcher'
+import type { BaseMessage, Postback } from './dispatcher'
+import Dispatcher from './dispatcher'
 import EventEmitter from 'events'
 
 class Convo<Message: BaseMessage, Reply: {}> {
   sender: string
-  tester: TalkTalkTest<Message, Reply>
+  tester: Tester<Message, Reply>
   replies: Reply[] = []
 
-  constructor (tester: TalkTalkTest<Message, Reply>, sender: string) {
+  constructor (tester: Tester<Message, Reply>, sender: string) {
     this.tester = tester
     this.sender = sender
     this.tester._messageEvents.on(this.sender, reply => {
@@ -50,7 +50,7 @@ class Convo<Message: BaseMessage, Reply: {}> {
   }
 }
 
-export class TalkTalkTest<Message: BaseMessage, Reply: {}> {
+export default class Tester<Message: BaseMessage, Reply: {}> {
   _messageEvents = new EventEmitter()
   sender: (r: Reply, m: Message | Postback<*>) => Promise<*> = async (r: Reply, m: *) => this._messageEvents.emit(m.sender, r)
   dispatcher: Dispatcher<Message, Reply> = new Dispatcher(this.sender)
