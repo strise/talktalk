@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.0.4]
+
 * Remove unused logic
 * Rename methods
 
