@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+# [0.0.5]
+
 * Remove redirects
 
 ## [0.0.4]
