@@ -18,7 +18,7 @@ class HelloWorldHandler extends Handler {
 
 tester.dispatcher.registerHandler(HelloWorldHandler)
 
-describe('dispatncher', () => {
+describe('dispatcher', () => {
   it('should send hello world', async () => {
     const convo = tester.startConversation()
     await convo.sendMessage({message: 'Hi'})

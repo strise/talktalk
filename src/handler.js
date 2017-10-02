@@ -1,9 +1,9 @@
 // @flow
 import type { BaseMessage } from './dispatcher'
 
-export default class Handler<Context: {}, JumpContext: {}, PostbackContext: {}, Message: BaseMessage, Reply: {}> {
+export default class Handler<Context: {}, JumpContext: {}, Message: BaseMessage, Reply: {}> {
   hasSentReply: boolean = false
-  jumper: ?(() => Promise<{ handler: Handler<*, *, *, Message, Reply>, context: * }>)
+  jumper: ?(() => Promise<{ handler: Handler<*, *, Message, Reply>, context: * }>)
   intent: ?string
   sender: (r: Reply) => Promise<*>
 
@@ -29,10 +29,6 @@ export default class Handler<Context: {}, JumpContext: {}, PostbackContext: {}, 
 
   }
 
-  async handlePostback (postback: PostbackContext): Promise<?Context> {
-
-  }
-
   async handleJump (context: JumpContext): Promise<?Context> {
 
   }
@@ -42,7 +38,7 @@ export default class Handler<Context: {}, JumpContext: {}, PostbackContext: {}, 
     await this.sender(reply)
   }
 
-  jumpTo<C: {}, RC: {}> (_Handler: Class<Handler<C, RC, PostbackContext, Message, Reply>>, context: RC) {
+  jumpTo<C: {}, RC: {}> (_Handler: Class<Handler<C, RC, Message, Reply>>, context: RC) {
     this.jumper = async () => {
       const handler = new _Handler(this.sender)
       const newContext: ?C = await handler.handleJump(context)

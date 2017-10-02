@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Remove redirects
+
 ## [0.0.4]
 
 * Remove unused logic
