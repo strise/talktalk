@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+# [0.0.7]
+
+* Build new release
+
 # [0.0.6]
 
 * Make sender available for handler
