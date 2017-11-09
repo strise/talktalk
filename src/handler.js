@@ -5,9 +5,11 @@ export default class Handler<Context: {}, JumpContext: {}, Message: BaseMessage,
   hasSentReply: boolean = false
   jumper: ?(() => Promise<{ handler: Handler<*, *, Message, Reply>, context: * }>)
   intent: ?string
-  sender: (r: Reply) => Promise<*>
+  replier: (r: Reply) => Promise<*>
+  sender: string
 
-  constructor (sender: (r: Reply) => Promise<*>) {
+  constructor (replier: (r: Reply) => Promise<*>, sender: string) {
+    this.replier = replier
     this.sender = sender
   }
 
@@ -35,12 +37,12 @@ export default class Handler<Context: {}, JumpContext: {}, Message: BaseMessage,
 
   async sendReply (reply: Reply): Promise<*> {
     this.hasSentReply = true
-    await this.sender(reply)
+    await this.replier(reply)
   }
 
   jumpTo<C: {}, RC: {}> (_Handler: Class<Handler<C, RC, Message, Reply>>, context: RC) {
     this.jumper = async () => {
-      const handler = new _Handler(this.sender)
+      const handler = new _Handler(this.replier, this.sender)
       const newContext: ?C = await handler.handleJump(context)
       return {handler, context: newContext}
     }

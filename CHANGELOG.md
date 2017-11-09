@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Make sender available for handler
+
 # [0.0.5]
 
 * Remove redirects
