@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+# [0.0.8]
+
 * Add optional sender argument for tester
 
 # [0.0.7]
