@@ -1,6 +1,6 @@
 {
   "name": "talktalk",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A framework for bots",
   "main": "lib/index.js",
   "scripts": {
