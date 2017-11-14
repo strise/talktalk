@@ -55,7 +55,7 @@ export default class Tester<Message: BaseMessage, Reply: {}> {
   sender: (r: Reply, m: Message | Postback<*>) => Promise<*> = async (r: Reply, m: *) => this._messageEvents.emit(m.sender, r)
   dispatcher: Dispatcher<Message, Reply> = new Dispatcher(this.sender)
 
-  startConversation (): Convo<Message, Reply> {
-    return new Convo(this, `user-${Math.floor(Math.random() * 10 ^ 32)}`)
+  startConversation (sender?: string = `user-${Math.floor(Math.random() * 10 ^ 32)}`): Convo<Message, Reply> {
+    return new Convo(this, sender)
   }
 }
