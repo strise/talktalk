@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Add support for sender id generator
+
 # [0.0.8]
 
 * Add optional sender argument for tester
